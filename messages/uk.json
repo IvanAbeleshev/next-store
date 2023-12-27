@@ -1,0 +1,12 @@
+{
+  "components":{
+    "footer":{
+      "favorite": "Ізбране",
+      "basket": "Корзина",
+      "contacts": "Контакти"
+    }
+  },
+  "pages":{
+
+  }
+}
