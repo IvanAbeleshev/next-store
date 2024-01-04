@@ -11,17 +11,20 @@ export const metadata: Metadata = {
   description: 'Магазин автозапчастин',
 }
 
-export default function RootLayout({
-  children,
-  params: {locale}
-}: {
+interface IPropsRootLayout{
   children: React.ReactNode,
   params: {
     locale:string
   }
-}) {
+}
+
+export default function RootLayout({
+  children,
+  params: { locale }
+}: IPropsRootLayout) {
+
   return (
-    <html lang={locale}>
+    <html lang={ locale }>
       <body 
         className={
           montserrat.className + `
@@ -29,7 +32,7 @@ export default function RootLayout({
           flex-col 
           min-h-screen 
           justify-between 
-          mx-media-auto 
+          !mx-media-auto 
           bg-background`
         }
       >

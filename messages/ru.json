@@ -1,5 +1,14 @@
 {
   "components":{
+    "header":{
+      "titleSignUp": "Регистрация",
+      "titleSignIn": "Вход",
+      "googleAuth": "Продолжить с Google",
+      "email": "email",
+      "password": "Пароль",
+      "registration": "Зарегистрироваться",
+      "enter": "Войти"
+    },
     "footer":{
       "favorite": "Избраное",
       "basket": "Корзина",

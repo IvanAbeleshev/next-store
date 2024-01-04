@@ -8,12 +8,14 @@ const Footer = () => {
   const t = useTranslations()
   return(
     <footer className='flex flex-row justify-between p-8 rounded-t-4xl shadow-card bg-light'>
-      <Image 
-        alt='footer_logo yamagaz'
-        src={'/img/logo-auto-market.png'}
-        width={200}
-        height={100}
-      />
+      <Link href={'/'}>
+        <Image 
+          alt='footer_logo yamagaz'
+          src={'/img/logo-auto-market.png'}
+          width={200}
+          height={100}
+        />
+      </Link>
       <ul>
         <li>
           <Link href={'/favorite'} className='hover:text-main'>

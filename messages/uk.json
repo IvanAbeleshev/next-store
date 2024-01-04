@@ -1,5 +1,14 @@
 {
   "components":{
+    "header":{
+      "titleSignUp": "Реєстрація",
+      "titleSignIn": "Вхід",
+      "googleAuth": "Продовжити з Google",
+      "email": "email",
+      "password": "Пароль",
+      "registration": "Зареєструватись",
+      "enter": "Увійти"
+    },
     "footer":{
       "favorite": "Ізбране",
       "basket": "Корзина",

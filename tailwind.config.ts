@@ -13,6 +13,7 @@ const config: Config = {
         
         'main': '#FFA542',
         'light': '#fff',
+        'dark': '#000',
       },
       borderRadius: {
         '4xl': '30px',

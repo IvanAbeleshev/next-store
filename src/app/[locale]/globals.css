@@ -7,3 +7,7 @@
     @apply mx-2 sm:mx-5 md:mx-10 lg:mx-16 xl:mx-20 2xl:mx-32
   }
 }
+
+body{
+  padding: 0 !important;
+}
