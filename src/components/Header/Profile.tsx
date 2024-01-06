@@ -2,13 +2,15 @@
 
 import { ITranslationHeader } from '@/interfaces'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/utils/constants/accessConstants'
-import { setCookie, getCookie } from 'cookies-next'
+import { setCookie, getCookie, deleteCookie } from 'cookies-next'
 import { useEffect, useState } from 'react'
-import { Modal } from 'rsuite'
+import { Dropdown, Modal } from 'rsuite'
 import AuthForm from '../AuthForm/AuthForm'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { jwtDecode } from 'jwt-decode'
 import { setInitialUserState, setUserState } from '@/store/slices/userSlice'
+import { FaRegHeart, FaRegUser, FaBasketShopping } from 'react-icons/fa6'
+import { IoLogOutOutline } from 'react-icons/io5'
 
 interface IPropsProfile{
   translation: ITranslationHeader,
@@ -46,17 +48,36 @@ const Profile = ( { data, translation, googleAuthHref }:IPropsProfile ) => {
           userName: tokenData.email
         }
       ))
-
     }
+  }
+
+  const logout = () => {
+    deleteCookie(ACCESS_TOKEN)
+    deleteCookie(REFRESH_TOKEN)
+    dispatch(setInitialUserState())
   }
 
   return (
     <>
-      {/* need create normal component for user menu and show name */}
       {userData.isAuthicated?
-        <div className=''>
-          {userData.userName}
-        </div>:
+        <Dropdown title={userData.userName} noCaret placement='bottomEnd'>
+          <Dropdown.Item className='flex items-center gap-1'>
+            <FaRegUser className='w-5 h-5'/>
+            {translation.profile}
+          </Dropdown.Item>
+          <Dropdown.Item className='flex items-center gap-1'>
+            <FaRegHeart className='w-5 h-5' />
+            {translation.favorite}
+          </Dropdown.Item>
+          <Dropdown.Item className='flex items-center gap-1'>
+          <FaBasketShopping className='w-5 h-5' />
+            {translation.basket}
+          </Dropdown.Item>
+          <Dropdown.Item onClick={logout} className='flex items-center gap-1'>
+            <IoLogOutOutline className='w-5 h-5' /> 
+            {translation.logout}
+          </Dropdown.Item>
+        </Dropdown>:
         <div 
           onClick={ () => setIsModalOpen(true) }
           className='hover:text-main cursor-pointer'
@@ -68,7 +89,10 @@ const Profile = ( { data, translation, googleAuthHref }:IPropsProfile ) => {
       {isModalOpen && 
         <Modal 
           open={isModalOpen} 
-          onClose={()=>{setIsModalOpen(false)}} 
+          onClose={()=>{
+            setIsModalOpen(false)
+            setModalMode('signup')
+          }} 
           overflow={false}
         >
           <Modal.Header>
@@ -86,6 +110,7 @@ const Profile = ( { data, translation, googleAuthHref }:IPropsProfile ) => {
               modalMode={modalMode}
               closeModal={()=>{
                 setIsModalOpen(false)
+                setModalMode('signup')
                 dispatchUserInfo(getCookie(ACCESS_TOKEN))
               }}
             />

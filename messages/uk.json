@@ -7,7 +7,19 @@
       "email": "email",
       "password": "Пароль",
       "registration": "Зареєструватись",
-      "enter": "Увійти"
+      "enter": "Увійти",
+      "logout": "Вихід",
+      "favorite": "Ізбране",
+      "basket": "Корзина",
+      "profile": "Профіль",
+      "errors": {
+        "default": "Невідома помилка!",
+        "userExist": "Користувач з таким email вже існує!",
+        "requiredPassword": "Пароль обов'язковий!",
+        "userDidNotCreate": "Помилка при створенні користувача!",
+        "userDoesNotExist": "Користувача з таким email не існує!",
+        "incorrectPassword": "Невірний пароль!"
+      }
     },
     "footer":{
       "favorite": "Ізбране",

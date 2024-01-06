@@ -2,8 +2,7 @@
 
 import { Link } from '@/navigation'
 import Image from 'next/image'
-import { FaRegHeart } from 'react-icons/fa6'
-import { SlBasket } from 'react-icons/sl'
+import { FaRegHeart, FaBasketShopping } from 'react-icons/fa6'
 import Profile from './Profile'
 import { refreshAPI } from '@/utils/axiosInstances'
 import { getTranslations } from 'next-intl/server'
@@ -20,6 +19,10 @@ const Header = async () => {
     registration: t('registration'),
     titleSignIn: t('titleSignIn'),
     titleSignUp: t('titleSignUp'),
+    logout: t('logout'),
+    basket: t('basket'),
+    favorite: t('favorite'),
+    profile: t('profile')
   }
 
   const getTokens = async() => {
@@ -52,7 +55,7 @@ const Header = async () => {
       </div>
       <div className='flex items-center gap-5'>
         <FaRegHeart className='w-5 h-5' />
-        <SlBasket className='w-5 h-5' />
+        <FaBasketShopping className='w-5 h-5' />
         <Profile 
           data={tokens} 
           translation={translation} 

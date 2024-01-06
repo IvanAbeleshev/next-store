@@ -7,7 +7,19 @@
       "email": "email",
       "password": "Пароль",
       "registration": "Зарегистрироваться",
-      "enter": "Войти"
+      "enter": "Войти",
+      "logout": "Выход",
+      "favorite": "Избраное",
+      "basket": "Корзина",
+      "profile": "Профиль",
+      "errors": {
+        "default": "Неизвесная ошибка!",
+        "userExist": "Пользователь с таким email уже существует!",
+        "requiredPassword": "Укажите пароль!",
+        "userDidNotCreate": "Ошибка при создании пользователя!",
+        "userDoesNotExist": "Пользователя с такими учетными данными не существует!",
+        "incorrectPassword": "Неверный пароль!"
+      }
     },
     "footer":{
       "favorite": "Избраное",

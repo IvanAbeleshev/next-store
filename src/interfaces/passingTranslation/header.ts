@@ -6,4 +6,8 @@ export interface ITranslationHeader{
   password: string,
   registration: string,
   enter: string,
+  logout: string,
+  basket: string,
+  favorite: string,
+  profile: string
 }

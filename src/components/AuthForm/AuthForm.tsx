@@ -1,6 +1,6 @@
 'use client'
 
-import { signIn } from '@/actions/authActions'
+import { signIn, signUp } from '@/actions/authActions'
 import { ITranslationHeader } from '@/interfaces'
 import { Link, redirect } from '@/navigation'
 import { useEffect, useState } from 'react'
@@ -21,10 +21,10 @@ interface IPropsAuthForm{
   closeModal?: () => void
 }
 
-// need to add signup action and create uiversal handler error with translations!!
 const AuthForm = ( { translation, googleAuthHref, modalMode, closeModal }:IPropsAuthForm) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [stateSignIn, signInAction] = useFormState(signIn, initialState)
+  const [stateSignUp, signUpAction] = useFormState(signUp, initialState)
 
   useEffect(()=>{
     if(stateSignIn.message === 'success'){
@@ -37,8 +37,19 @@ const AuthForm = ( { translation, googleAuthHref, modalMode, closeModal }:IProps
     }
   }, [stateSignIn])
 
+  useEffect(()=>{
+    if(stateSignUp.message === 'success'){
+      if(closeModal){
+        closeModal()
+      }else{
+        redirect('/')
+      }
+      
+    }
+  }, [stateSignUp])
+
   return(
-  <form action={signInAction}>
+  <form action={modalMode === 'signin' ? signInAction : signUpAction}>
     <div className='flex flex-col gap-8'>
       <InputGroup inside>
         <InputGroup.Addon>
@@ -56,9 +67,14 @@ const AuthForm = ( { translation, googleAuthHref, modalMode, closeModal }:IProps
         </InputGroup.Button>
       </InputGroup> 
     </div>
-    {modalMode === 'signin' && stateSignIn?.message &&
+
+    {modalMode === 'signin' && stateSignIn?.message && stateSignIn.message !== 'success' &&
       <span className='block text-red-500 text-center my-2'>{stateSignIn.message}</span>
     }
+    {modalMode === 'signup' && stateSignUp?.message && stateSignUp.message !== 'success' &&
+      <span className='block text-red-500 text-center my-2'>{stateSignUp.message}</span>
+    }
+    
     <div className='flex flex-col w-full gap-3 mt-3'>
       <input 
         className='
