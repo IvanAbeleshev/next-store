@@ -11,6 +11,8 @@ import { jwtDecode } from 'jwt-decode'
 import { setInitialUserState, setUserState } from '@/store/slices/userSlice'
 import { FaRegHeart, FaRegUser, FaBasketShopping } from 'react-icons/fa6'
 import { IoLogOutOutline } from 'react-icons/io5'
+import { Link } from '@/navigation'
+import { useRouter } from 'next/navigation'
 
 interface IPropsProfile{
   translation: ITranslationHeader,
@@ -24,9 +26,16 @@ const Profile = ( { data, translation, googleAuthHref }:IPropsProfile ) => {
 
   const dispatch = useAppDispatch()
   const userData = useAppSelector(state=>state.userSlice)
+  const router = useRouter()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalMode, setModalMode] = useState<'signup'|'signin'>('signin')
+
+  useEffect(()=>{
+    if(!userData.isAuthicated){
+      router.push('/')
+    }
+  }, [userData.isAuthicated])
 
   useEffect(()=>{
     if(data){
@@ -61,17 +70,23 @@ const Profile = ( { data, translation, googleAuthHref }:IPropsProfile ) => {
     <>
       {userData.isAuthicated?
         <Dropdown title={userData.userName} noCaret placement='bottomEnd'>
-          <Dropdown.Item className='flex items-center gap-1'>
-            <FaRegUser className='w-5 h-5'/>
-            {translation.profile}
+          <Dropdown.Item>
+            <Link href={'/profile'} className='flex items-center gap-1'>
+              <FaRegUser className='w-5 h-5'/>
+              {translation.profile}
+            </Link>
           </Dropdown.Item>
-          <Dropdown.Item className='flex items-center gap-1'>
-            <FaRegHeart className='w-5 h-5' />
-            {translation.favorite}
+          <Dropdown.Item>
+            <Link href={'/favorite'} className='flex items-center gap-1'>
+              <FaRegHeart className='w-5 h-5' />
+              {translation.favorite}
+            </Link>
           </Dropdown.Item>
-          <Dropdown.Item className='flex items-center gap-1'>
-          <FaBasketShopping className='w-5 h-5' />
-            {translation.basket}
+          <Dropdown.Item>
+            <Link href={'/basket'} className='flex items-center gap-1'>
+              <FaBasketShopping className='w-5 h-5' />
+              {translation.basket}
+            </Link>
           </Dropdown.Item>
           <Dropdown.Item onClick={logout} className='flex items-center gap-1'>
             <IoLogOutOutline className='w-5 h-5' /> 

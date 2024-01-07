@@ -4,6 +4,7 @@ import { openAPI } from '@/utils/axiosInstances'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/utils/constants/accessConstants'
 import InternalizationErrors from '@/utils/internalization/InternalizationErrors'
 import { isAxiosError } from 'axios'
+import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 
 export const signIn = async(presState:any, actionData: FormData): Promise<{message: string}> => {
@@ -15,6 +16,7 @@ export const signIn = async(presState:any, actionData: FormData): Promise<{messa
     const {access_token, refresh_token} = response.data
     cookies().set(ACCESS_TOKEN, access_token)
     cookies().set(REFRESH_TOKEN, refresh_token)
+    revalidatePath('/')
     return ({
       message: 'success'
     })
@@ -40,6 +42,7 @@ export const signUp = async(presState:any, actionData: FormData): Promise<{messa
     const {access_token, refresh_token} = response.data
     cookies().set(ACCESS_TOKEN, access_token)
     cookies().set(REFRESH_TOKEN, refresh_token)
+    revalidatePath('/')
     return ({
       message: 'success'
     })

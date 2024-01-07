@@ -2,13 +2,14 @@
 
 import { signIn, signUp } from '@/actions/authActions'
 import { ITranslationHeader } from '@/interfaces'
-import { Link, redirect } from '@/navigation'
+import { Link } from '@/navigation'
 import { useEffect, useState } from 'react'
 import { Input, InputGroup } from 'rsuite'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
 import { FaUser, FaKey } from 'react-icons/fa'
 import Image from 'next/image'
 import { useFormState } from 'react-dom'
+import { redirect } from 'next/navigation'
 
 const initialState = {
   message: ''
@@ -30,10 +31,7 @@ const AuthForm = ( { translation, googleAuthHref, modalMode, closeModal }:IProps
     if(stateSignIn.message === 'success'){
       if(closeModal){
         closeModal()
-      }else{
-        redirect('/')
       }
-      
     }
   }, [stateSignIn])
 
@@ -41,10 +39,7 @@ const AuthForm = ( { translation, googleAuthHref, modalMode, closeModal }:IProps
     if(stateSignUp.message === 'success'){
       if(closeModal){
         closeModal()
-      }else{
-        redirect('/')
       }
-      
     }
   }, [stateSignUp])
 
