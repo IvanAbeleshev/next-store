@@ -9,7 +9,6 @@ import { BsEye, BsEyeSlash } from 'react-icons/bs'
 import { FaUser, FaKey } from 'react-icons/fa'
 import Image from 'next/image'
 import { useFormState } from 'react-dom'
-import { redirect } from 'next/navigation'
 
 const initialState = {
   message: ''

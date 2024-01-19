@@ -2,7 +2,7 @@
 
 import { ITranslationHeader } from '@/interfaces'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/utils/constants/accessConstants'
-import { setCookie, getCookie, deleteCookie } from 'cookies-next'
+import { setCookie, getCookie } from 'cookies-next'
 import { useEffect, useState } from 'react'
 import { Dropdown, Modal } from 'rsuite'
 import AuthForm from '../AuthForm/AuthForm'
@@ -11,8 +11,13 @@ import { jwtDecode } from 'jwt-decode'
 import { setInitialUserState, setUserState } from '@/store/slices/userSlice'
 import { FaRegHeart, FaRegUser, FaBasketShopping } from 'react-icons/fa6'
 import { IoLogOutOutline } from 'react-icons/io5'
-import { Link } from '@/navigation'
-import { useRouter } from 'next/navigation'
+import { Link, useRouter } from '@/navigation'
+import { logout } from '@/actions/authActions'
+import { useFormState } from 'react-dom'
+
+const initialState = {
+  message: ''
+}
 
 interface IPropsProfile{
   translation: ITranslationHeader,
@@ -24,18 +29,14 @@ interface IPropsProfile{
 }
 const Profile = ( { data, translation, googleAuthHref }:IPropsProfile ) => {
 
+  const [stateLogout, logoutAction] = useFormState(logout, initialState)
+
   const dispatch = useAppDispatch()
   const userData = useAppSelector(state=>state.userSlice)
   const router = useRouter()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalMode, setModalMode] = useState<'signup'|'signin'>('signin')
-
-  useEffect(()=>{
-    if(!userData.isAuthicated){
-      router.push('/')
-    }
-  }, [userData.isAuthicated])
 
   useEffect(()=>{
     if(data){
@@ -60,11 +61,13 @@ const Profile = ( { data, translation, googleAuthHref }:IPropsProfile ) => {
     }
   }
 
-  const logout = () => {
-    deleteCookie(ACCESS_TOKEN)
-    deleteCookie(REFRESH_TOKEN)
-    dispatch(setInitialUserState())
-  }
+  useEffect(()=>{
+
+    if(stateLogout.message === 'success'){
+      dispatch(setInitialUserState())
+      router.push('/')
+    }
+  },[stateLogout])
 
   return (
     <>
@@ -88,9 +91,13 @@ const Profile = ( { data, translation, googleAuthHref }:IPropsProfile ) => {
               {translation.basket}
             </Link>
           </Dropdown.Item>
-          <Dropdown.Item onClick={logout} className='flex items-center gap-1'>
-            <IoLogOutOutline className='w-5 h-5' /> 
-            {translation.logout}
+          <Dropdown.Item>
+            <form action={logoutAction}>
+              <button className='flex items-center gap-1'>
+                <IoLogOutOutline className='w-5 h-5' /> 
+                {translation.logout}
+              </button>
+            </form>
           </Dropdown.Item>
         </Dropdown>:
         <div 
@@ -125,7 +132,7 @@ const Profile = ( { data, translation, googleAuthHref }:IPropsProfile ) => {
               modalMode={modalMode}
               closeModal={()=>{
                 setIsModalOpen(false)
-                setModalMode('signup')
+                setModalMode('signin')
                 dispatchUserInfo(getCookie(ACCESS_TOKEN))
               }}
             />

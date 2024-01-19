@@ -7,7 +7,7 @@ import { isAxiosError } from 'axios'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 
-export const signIn = async(presState:any, actionData: FormData): Promise<{message: string}> => {
+export const signIn = async(prevState:any, actionData: FormData): Promise<{message: string}> => {
   try{
     const response = await openAPI.post('/auth/signin', {
       login: actionData.get('email')?.toString().trim(),
@@ -16,7 +16,6 @@ export const signIn = async(presState:any, actionData: FormData): Promise<{messa
     const {access_token, refresh_token} = response.data
     cookies().set(ACCESS_TOKEN, access_token)
     cookies().set(REFRESH_TOKEN, refresh_token)
-    revalidatePath('/')
     return ({
       message: 'success'
     })
@@ -33,7 +32,7 @@ export const signIn = async(presState:any, actionData: FormData): Promise<{messa
   }
 }
 
-export const signUp = async(presState:any, actionData: FormData): Promise<{message: string}> => {
+export const signUp = async(prevState:any, actionData: FormData): Promise<{message: string}> => {
   try{
     const response = await openAPI.post('/auth/signup', {
       email: actionData.get('email')?.toString().trim,
@@ -42,7 +41,7 @@ export const signUp = async(presState:any, actionData: FormData): Promise<{messa
     const {access_token, refresh_token} = response.data
     cookies().set(ACCESS_TOKEN, access_token)
     cookies().set(REFRESH_TOKEN, refresh_token)
-    revalidatePath('/')
+  
     return ({
       message: 'success'
     })
@@ -56,4 +55,13 @@ export const signUp = async(presState:any, actionData: FormData): Promise<{messa
       message: await InternalizationErrors.getAuthErrorTranslation() 
     }
   }
+}
+
+export const logout = async (prevState:any, actionData:FormData): Promise<{message: string}> => {
+  cookies().delete(ACCESS_TOKEN)
+  cookies().delete(REFRESH_TOKEN)
+
+  return ({
+    message: 'success'
+  })
 }

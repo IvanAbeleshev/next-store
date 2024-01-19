@@ -7,7 +7,7 @@ import { cookies } from 'next/headers'
 const CheckAuth = () => {
 
   const refreshToken = cookies().get(REFRESH_TOKEN)
-  if(!refreshToken){
+  if(!refreshToken?.value){
     redirect('/authentication')
   }
 
