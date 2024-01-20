@@ -28,6 +28,9 @@
     }
   },
   "pages":{
-
+    "main":{
+      "viewFullCatalog": "Каталог",
+      "selectCategory": "Выберите категорию товаров"
+    }
   }
 }

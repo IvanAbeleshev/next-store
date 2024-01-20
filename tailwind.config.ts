@@ -14,6 +14,9 @@ const config: Config = {
         'main': '#FFA542',
         'light': '#fff',
         'dark': '#000',
+
+        'gray': '#838383',
+        
       },
       borderRadius: {
         '4xl': '30px',

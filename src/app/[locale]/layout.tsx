@@ -32,12 +32,11 @@ export default function RootLayout({
           flex-col 
           min-h-screen 
           justify-between 
-          !mx-media-auto 
           bg-background`
         }
       >
         <Header />
-        <main className='grow'>
+        <main className='grow !mx-media-auto pb-8'>
           {children}
         </main>
         <Footer />

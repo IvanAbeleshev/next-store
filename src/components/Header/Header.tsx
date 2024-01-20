@@ -39,7 +39,7 @@ const Header = async () => {
   }
   const tokens = await getTokens()
   return (
-    <header className='sticky top-0 left-0 bg-background flex justify-between items-center py-5'>
+    <header className='sticky top-0 left-0 bg-background flex justify-between items-center py-5 px-media-auto'>
       <div>
         <Link href={'/'}>
           <Image 
